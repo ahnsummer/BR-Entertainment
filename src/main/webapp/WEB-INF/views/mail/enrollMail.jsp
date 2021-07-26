@@ -1,365 +1,389 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-	<!-- 부트스트랩 탬플릿 -->
-	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-	<link href="resources/css/styles.css" rel="stylesheet" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+<!-- 부트스트랩 탬플릿 -->
+<link
+	href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
+	rel="stylesheet" />
+<link href="resources/css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+	crossorigin="anonymous"></script>
+
+<!-- jQuery 라이브러리 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- fullcalendar CDNs-->
+<link href='resources/scheduleResources/lib/main.css' rel='stylesheet' />
+<script src='resources/scheduleResources/lib/main.js'></script>
+<script src='resources/scheduleResources/lib/locales/ko.js'></script>
+
+<!-- summer note -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script src="resources/mailResources/lang/summernote-ko-KR.js"></script>
+
+<!-- email input  -->
+<link rel="stylesheet" href="resources/mailResources/email.multiple.css">
+
+<!-- modal 라이브러리 -->
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+#layoutAuthentication_content {
+	margin: auto;
+}
+
+.col-lg-5 {
+	width: 1000px;
+}
+
+.dataTable-input {
+	display: inline-block;
+}
+
+.input-explain {
+	display: inline-block;
+	width: 70px;
+}
+
+#schTitle, #attendance, #schCategory, #schContent {
+	width: 90%;
+}
+
+#startDate, #endDate, #startTime, #endTime {
+	height: 40px;
+	width: 130px;
+}
+
+#schContent {
+	resize: none;
+	width: 68%
+}
+
+#email-check {
+	display: none;
+	color: red;
+}
+
+/* btn css */
+#toggle_fileList:link, #toggle_fileList:visited, #toggle_fileList:hover,
+	#toggle_fileList:active {
+	text-decoration: none;
+	text-decoration: underline;
+	color: black;
+}
+
+.btn-block {
+	margin-bottom: 5px;
+}
+
+.svg-inline--fa {
+	vertical-align: middle;
+}
+
+/* file input css*/
+#file_wrap {
 	
-	<!-- jQuery 라이브러리 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+}
+
+input[type="file"] {
+	display: none;
+}
+
+#file_showAndHideBtn {
+	size: 7;
+}
+
+.fa-caret-square-up, .fa-caret-square-down {
+	font-size: 30px;
+}
+
+#target_file_wrap {
+	float: left;
+}
+
+#drop_zone {
+	border: 1px solid #e5e5e5;
+	float: right;
+	width: 80%;
+	height: 120px;
+	display: none;
+}
+
+#content_explain {
+	clear: both;
+}
+
+/* summernote css */
+.note-modal-footer {
+	height: 50px;
+	padding-right: 30px;
+	border-top: 1px solid #e5e5e5;
+}
+
+/* modal css */
+.modal-backdrop.show {
+	opacity: 0;
+}
+
+.modal-body-content {
+	width: 100%;
+	padding: 16px 24px;
+	display: flex;
+	flex-direction: row;
+}
+
+.content {
+	display: flex;
+	flex: 5;
+}
+
+.content, .move-tab, .new-list {
+	box-sizing: border-box;
+	height: 460px;
+}
+
+.content-org-tree {
+	border: 1px solid #c9c9c9;
+	flex: 0.8;
+}
+
+.content-list {
+	border: 1px solid #c9c9c9;
+	flex: 2.2;
+	height: 460px;
+	overflow: auto;
+}
+
+.search-wrap, .scroll-wrap {
 	
-  	<!-- fullcalendar CDNs-->
-    <link href='resources/scheduleResources/lib/main.css' rel='stylesheet' />
-    <script src='resources/scheduleResources/lib/main.js'></script>
-    <script src='resources/scheduleResources/lib/locales/ko.js'></script>
+}
 
-	<!-- summer note -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-    
-    <script src="resources/mailResources/lang/summernote-ko-KR.js"></script>
-    
-    <!-- email input  -->
-    <link rel="stylesheet" href="resources/mailResources/email.multiple.css">
-    
-    <!-- modal 라이브러리 -->
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <style>
-        #layoutAuthentication_content{
-            margin: auto;
-        }
+.move-tab {
+	text-align: center;
+	flex: 0.4;
+}
 
-        .col-lg-5{
-            width:1000px;
-        }
+.new-list {
+	border: 1px solid #c9c9c9;
+	flex: 1;
+}
 
+ul, li {
+	list-style: none;
+}
 
-        .dataTable-input{
-            display: inline-block;
-        }
+.open {
+	color: rgba(155, 89, 182);
+	style: none;
+}
 
-        .input-explain{
-            display: inline-block;
-            width:70px;
-        }
+.close {
+	font-family: 'Noto Sans KR', sans-serif
+}
 
-        #schTitle, #attendance, #schCategory, #schContent{
-            width: 90%;
-        }
+.open:hover, .close:hover {
+	style: none;
+}
 
-        #startDate, #endDate, #startTime, #endTime{
-            height:40px; width:130px;
-        }
+#datatablesSimple {
+	border-box: 1px solid black;
+}
 
-        #schContent{
-            resize: none;
-            width:68%
-        }
-		
-		#email-check{
-			display:none;
-            color:red;
-		}
-		
-        /* btn css */
-        #toggle_fileList:link, #toggle_fileList:visited, #toggle_fileList:hover, #toggle_fileList:active{
-            text-decoration: none;
-            text-decoration: underline;
-            color:black;
-        }
-
-        .btn-block{
-            margin-bottom:5px;
-        }
-
-        .svg-inline--fa{
-            vertical-align:middle;
-        }
-
-        /* file input css*/
-        #file_wrap{
-        }
-
-
-        input[type="file"]{
-            display: none;
-        }
-
-        #file_showAndHideBtn{
-            size:7;
-        }
-        
-        .fa-caret-square-up, .fa-caret-square-down{
-            font-size:30px;
-        }
-
-        #target_file_wrap{
-            float:left;
-        }
-
-        #drop_zone{
-            border:1px solid #e5e5e5;
-            float:right;
-            width:80%;
-            height:120px;
-            display:none;
-        }
-
-        #content_explain{
-            clear:both;
-        }
-
-        /* summernote css */
-        .note-modal-footer{
-            height:50px;
-            padding-right:30px;
-            border-top:1px solid #e5e5e5;
-        }
-        
-        /* modal css */
-    .modal-backdrop.show{
-        opacity :0;
-    }
-
-    .modal-body-content{
-        width:100%;
-        padding: 16px 24px;
-        display:flex;
-        flex-direction: row;
-    }
-
-    .content{
-        display:flex;
-        flex:5;
-    }
-
-    .content, .move-tab, .new-list{
-        box-sizing:border-box;
-        height: 460px;
-    }
-
-    .content-org-tree{
-        border: 1px solid #c9c9c9;
-        flex:0.8;
-    }
-    
-    .content-list{
-        border: 1px solid #c9c9c9;
-        flex:2.2;
-       	height:460px;
-		overflow:auto;
-    }
-
-    .search-wrap, .scroll-wrap{
-       
-    } 
-
-    .move-tab{
-        text-align:center;
-        flex:0.4;
-    }
-
-    .new-list{
-        border: 1px solid #c9c9c9;
-        flex:1;
-    }
-
-    ul, li{
-        list-style : none;
-    }
-
-    .open{
-        color:rgba(155, 89, 182);
-        style:none;
-    }
-
-    .close{
-        font-family: 'Noto Sans KR', sans-serif
-        
-    }
-
-    .open:hover, .close:hover {
-        style:none;
-    }
-    
-    #datatablesSimple{
-    border-box:1px solid black;
-    }
-    
-    a{
-    	text-decoration:none;
-    }
+a {
+	text-decoration: none;
+}
 
 /* 모달 css*/
-
 #customers {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
 }
 
 #customers td, #customers th {
-  border: 1px solid #ddd;
-  font-size:15px;
+	border: 1px solid #ddd;
+	font-size: 15px;
 }
 
-#customers tr:nth-child(even){background-color: #f2f2f2;}
+#customers tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
 
-#customers tr:hover {background-color: #ddd;}
+#customers tr:hover {
+	background-color: #ddd;
+}
 
 #customers th {
-  text-align: left;
-  background-color: rgba(155, 89, 182);
-  color: white;
+	text-align: left;
+	background-color: rgba(155, 89, 182);
+	color: white;
 }
-    </style>
+</style>
 <title>Insert title here</title>
 </head>
 <body>
-       <!-- 상단바 -->
-       <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-		<jsp:include page="../common/userHeader.jsp"/>
-    </nav>
-    
-    <div id="layoutSidenav">
-        
-        <!-- 메뉴바 -->
-        <div id="layoutSidenav_nav">
-            <jsp:include page="../common/userMenu.jsp"/>
-        </div>
+	<!-- 상단바 -->
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+		<jsp:include page="../common/userHeader.jsp" />
+	</nav>
 
-        <!--컨텐츠-->
-        <div id="layoutAuthentication_content">
-            <main>
-                <br><br>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-5">
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header"><h3 class="text-center font-weight-light my-4"><i class="far fa-envelope"></i> 메일 쓰기</h3></div>
-                                <form name="sendMail" id="sendMail" action="insert.mail" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" id="is_receiver_check" value="F">
-                                    <div class="card-body">
-                                    
-                                    	<input type="hidden" id="writer" name="mailWriter" value="${ loginUser.officeEmail }" >
-                                    	<input type="hidden" id="memberNo" name="memNo" value="${ loginUser.memNo }">       
-                                        <input type="text" id="mailReceiver" placeholder="Email">
-                                        
+	<div id="layoutSidenav">
+
+		<!-- 메뉴바 -->
+		<div id="layoutSidenav_nav">
+			<jsp:include page="../common/userMenu.jsp" />
+		</div>
+
+		<!--컨텐츠-->
+		<div id="layoutAuthentication_content">
+			<main>
+				<br>
+				<br>
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-5">
+							<div class="card shadow-lg border-0 rounded-lg mt-5">
+								<div class="card-header">
+									<h3 class="text-center font-weight-light my-4">
+										<i class="far fa-envelope"></i> 메일 쓰기
+									</h3>
+								</div>
+								<form name="sendMail" id="sendMail" action="insert.mail"
+									method="post" enctype="multipart/form-data">
+									<input type="hidden" id="is_receiver_check" value="F">
+									<div class="card-body">
+
+										<input type="hidden" id="writer" name="mailWriter"
+											value="${ loginUser.officeEmail }"> <input
+											type="hidden" id="memberNo" name="memNo"
+											value="${ loginUser.memNo }"> <input type="text"
+											id="mailReceiver" placeholder="Email">
+
 										<!--<input type="text" class="dataTable-input" id="receiver" style="width: 72%;" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" > -->
-                                        
-                                        <a id="pbPopup" class="btn btn-primary" data-toggle="modal" data-target="#myModal" >주소록</a>
-                                        <a id="toMe" class="btn btn-primary btn-block" href="#">내게 쓰기</a>
-                                        <label for=""></label><br>
-                                        <div id="email-check"></div><br><br>
-                                        <span class="input-explain">제목</span><input class="dataTable-input" id="title" name="mailTitle" type="text" min=0 placeholder="" />
-                                        <label for=""></label>
 
-                                        <br>
+										<a id="pbPopup" class="btn btn-primary" data-toggle="modal"
+											data-target="#myModal">주소록</a> <a id="toMe"
+											class="btn btn-primary btn-block" href="#">내게 쓰기</a> <label
+											for=""></label><br>
+										<div id="email-check"></div>
+										<br>
+										<br> <span class="input-explain">제목</span><input
+											class="dataTable-input" id="title" name="mailTitle"
+											type="text" min=0 placeholder="" /> <label for=""></label> <br>
 
-                                        <div id="file_wrap">
-                                            <div id="target_file_wrap">
-                                                <span>파일첨부</span>
-                                                <input multiple type="file" id="upfile" name="upfile">
-                                                <a id="toggle_fileList" href="#" onclick="toggle_layer();"><i class="far fa-caret-square-up"></i></a>
-                                                <a href="#" onclick="$('#upfile').click()" class="btn btn-primary">내 PC</a>
+										<div id="file_wrap">
+											<div id="target_file_wrap">
+												<span>파일첨부</span> <input multiple type="file" id="upfile"
+													name="upfile"> <a id="toggle_fileList" href="#"
+													onclick="toggle_layer();"><i
+													class="far fa-caret-square-up"></i></a> <a href="#"
+													onclick="$('#upfile').click()" class="btn btn-primary">내
+													PC</a>
 
-                                            </div>
-                                            <div id="drop_zone" ondrop="dropHandler(event);">
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                        <br><div id="content_explain">내용</div>
-                                        <br>
-                                        <div>
-                                            <textarea id="summernote" name="mailContent"></textarea>
-                                        </div>
-                                        <div class="card-footer text-center py-3">
-                                            <div class="small">
-                                                <button type="button" id="insertCheck" class="btn btn-primary btn-block">보내기</button>
-                                                <button type="button" id="sendTemp" class="btn btn-primary btn-block">임시저장</button>
-                                            </div>
-                                        </div>    
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
+											</div>
+											<div id="drop_zone" ondrop="dropHandler(event);">
+												<span></span>
+											</div>
+										</div>
+										<br>
+										<div id="content_explain">내용</div>
+										<br>
+										<div>
+											<textarea id="summernote" name="mailContent"></textarea>
+										</div>
+										<div class="card-footer text-center py-3">
+											<div class="small">
+												<button type="button" id="insertCheck"
+													class="btn btn-primary btn-block">보내기</button>
+												<button type="button" id="sendTemp"
+													class="btn btn-primary btn-block">임시저장</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
 
-			<!-- The Modal -->
-            <div class="modal fade" id="myModal">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                        <h4 class="modal-title">주소록 추가</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <div class="modal-body-content">
-                                <div class="content">
-                                    <div class="content-org-tree">
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="tree"><i class="fas fa-plus-square"></i></a><a href="#" class="open"> br엔터</a>
-                                                <ul class="deptName">
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="content-list">
-                                        <div class="search-wrap">
-                                        	<div class="dataTable-search">
-                                        		<input class="dataTable-input" placeholder="이름/이메일 검색" type="text">
-                                        	</div>
-                                        </div>
-                                        <div class="scroll-wrap">
-					                            <table id="customers" class="phoneBook">
-					                                <thead>
-					                                    <tr>
-					                                    	<th></th>
-					                                        <th>이름</th>
-					                                        <th>부서</th>
-					                                        <th>직급</th>
-					                                        <th>이메일</th>
-					                                    </tr>
-					                                </thead>
-					                                <tbody>
-					                                </tbody>
-					                            </table> 
-                                    	</div>
-                                	</div>
-	                                <div class="move-tab">
-	                                    <a id="add" class="btn btn-primary">추가 &gt</a><br><br>
-	                                    <a id="remove" class="btn btn-primary">&lt 제외</a>
-	                                </div>
-                                <div class="new-list">
-                                	
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                        	<a id="sendEmail" class="btn btn-primary">메일 보내기</a>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+	<!-- The Modal -->
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">주소록 추가</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="modal-body-content">
+						<div class="content">
+							<div class="content-org-tree">
+								<ul>
+									<li><a href="#" class="tree"><i
+											class="fas fa-plus-square"></i></a><a href="#" class="open">
+											br엔터</a>
+										<ul class="deptName">
+										</ul></li>
+								</ul>
+							</div>
+							<div class="content-list">
+								<div class="search-wrap">
+									<div class="dataTable-search">
+										<input class="dataTable-input" placeholder="이름/이메일 검색"
+											type="text">
+									</div>
+								</div>
+								<div class="scroll-wrap">
+									<table id="customers" class="phoneBook">
+										<thead>
+											<tr>
+												<th></th>
+												<th>이름</th>
+												<th>부서</th>
+												<th>직급</th>
+												<th>이메일</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<a id="sendEmail" class="btn btn-primary">메일 보내기</a>
+					<button type="button" id="btnCloseModal" class="btn btn-primary"
+						data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -382,7 +406,11 @@
 	          ['insert', ['link', 'picture', 'video']],
 	          ['view', ['fullscreen', 'codeview', 'help']]
 	        ]
-	      });
+	    });
+	    
+	    $('#pbPopup').click(function(){
+	    	$('#customers input[type=checkbox]').prop('checked', false);
+	    });
 	});
 	
     jQuery(document).ready(function($) {
@@ -436,7 +464,7 @@
                     fileSizeStr = parseInt(fileSize) + " byte"; 
                 }
                 // 업로드 파일 목록 생성 
-                $("#drop_zone").append('<div><input type="checkbox" id="#' + files[i] + '"> ' + fileName + ' (' + fileSizeStr + ')' + '<span class="cancel-file">x</span></div>');
+                $("#drop_zone").append('<div><input type="checkbox" id="#' + files[i] + '"> ' + fileName + ' (' + fileSizeStr + ')' + '<span class="cancel-file"><i class="fas fa-times-circle"></i></span></div>');
                 $("#drop_zone").show();
                 $(".fa-caret-square-up").attr('class', 'fa-caret-square-down');
                 
@@ -552,7 +580,8 @@
 	$('#insertCheck').click(function(e) {
         e.preventDefault();
         
-        if($('#is_receiver_check').val() !== 'T'){
+        //if($('#is_receiver_check').val() !== 'T'){
+        if($('.email-ids').length === 0) {
             $('.enter-mail-id').css('border', '1px solid red');
             $('.enter-mail-id').focus();
             $('#email-check').show();
@@ -595,7 +624,6 @@
 						let d = dlist[i];
 						$('.deptName').append('<li><a href="#" class="tree"><i class="fas fa-plus-square"></i>' + d['deptName'] + '</a></li>');
 					};
-					
 					for( var i in mlist){
 						let m = mlist[i];
 						$('.phoneBook>tbody').append('<tr>' + 
@@ -622,23 +650,18 @@
 		$('#sendEmail').on('click',function(){
 			let pbarr = [];
 			$('input:checked').each(function(){
-				
 				var pbEmail = $(this).parent().siblings('.pbEmail').text();
-				
 				pbarr.push(pbEmail);
 			})
-			
 			pbarr.shift();
 			pbarr.shift();
-			$('#myModal').modal('hide');
+			$('#btnCloseModal').click();
 			
 			for(var i=0; i<pbarr.length; i++){
-				
 				$('.all-mail').append('<span class="email-ids">'+ pbarr[i] +  '<span class="cancel-email">x</span></span>');
                 $('.all-mail').append('<input type="hidden" name="mailReceiver" value="' + pbarr[i] + '">');
 			}
 		})
-		
 		$('#toMe').on('click', function(){
 			$('.all-mail').append('<span class="email-ids">' + $('#writer').val()  +   '<span class="cancel-email">x</span></span>');
             $('.all-mail').append('<input type="hidden" name="mailReceiver" value="' + $('#writer').val() + '">');

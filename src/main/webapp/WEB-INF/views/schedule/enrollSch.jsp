@@ -272,8 +272,8 @@ $(document).ready(function() {
           ['view', ['fullscreen', 'codeview', 'help']]
         ]
       });
-});
-	function planSchSubmit(){
+    
+    function planSchSubmit(){
 		<c:choose>
 			<c:when test="${selected_date} eq  $('#startDate').val()">
 			var selected_startDate = ${selected_date} + ' ' + $('#startTime option:selected').val();
@@ -289,9 +289,8 @@ $(document).ready(function() {
 		$('#endDate').attr('value', selected_endDate);
 		
 		$("#postSch").attr("action","insert.sch").submit();
-		//$("#planSch").attr("action","insert.schF").submit();
-		
 	};
+});
 	
 </script>
 </html>
