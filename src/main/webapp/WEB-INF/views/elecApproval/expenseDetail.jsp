@@ -261,10 +261,9 @@
 				</div>
 				
 				<div class="content_4">
-				<!-- 삭제 버튼 보이는 조건문 --> 
-				<!-- 조건 : 승인 버튼이 눌리기 전에만 삭제 가능 => ec_status가 모두 N인 결재대기 상태
-							(ec_status 중 c 또는 y가 하나라도 있으면 삭제 버튼 x) --> 
 				
+					<!-- 승인조건 : approvalName(결재자리스트의 i번째 결재자의 memNo과 loginUser의 memNo이 일치할 경우)이 null이 아닐 경우, 
+						     turnNo()과 로그인한유저의 memNo이 일치하면 승인버튼이 활성화되고 아니면 비활성화된다 -->
 					<c:choose>  
 						<c:when test="${ approvalName != null }">     
 							<c:choose>                
@@ -278,7 +277,8 @@
 								</c:otherwise>
 							</c:choose>
 						</c:when>
-		
+			
+						<!-- 삭제조건 : 승인 버튼이 눌리기 전에만 삭제 가능 => ec_status가 모두 N인 결재대기 상태 (ec_status 중 c 또는 y가 하나라도 있으면 삭제 버튼 x) --> 
 						<c:when test="${ ea.memNo eq loginUser.memNo }">
 							<c:choose>
 								<c:when test="${ flag eq 'delete' }">

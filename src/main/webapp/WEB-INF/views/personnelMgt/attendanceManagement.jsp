@@ -211,7 +211,6 @@
    		
 		// 퇴근버튼 클릭용 AJAX
 		// 퇴근버튼 클릭시 total_time에도 현재시간 - 출근시간을 분단위로 환산해서 insert
-		
    		$(function(){
    			$(".checkOut").click(function(){
    	    		
@@ -230,7 +229,6 @@
        			
        		})
    		});
-   		
    		
    	</script>
     
