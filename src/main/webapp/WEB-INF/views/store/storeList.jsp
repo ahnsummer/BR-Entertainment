@@ -33,8 +33,29 @@
 	    z-index: 3; color: #fff; background-color: rgb(155, 89, 182); border-color: #dee2e6;}
 	.pagination .active a, .pagination .active a:focus, .pagination .active a:hover {background-color: rgb(155, 89, 182); box-shadow: none;} 
 	.pagination {justify-content: center !important;}
-	
-	/* 버튼 */
+
+	/* 영역 */
+	/* #layoutSidenav_content div {outline: 1px solid blueviolet;} */
+	.content{width:1200px; height:955px; margin: auto;}
+	.headArea{width: 1200px; height: 100px; text-align: center; margin: auto; padding: 50px 80px 0px 80px;}
+	.listArea{width:100%; height:800px; text-align: center; margin: auto;}
+	.pagingArea{width:100%; height:55px; margin: auto;}
+
+	/* 카테고리, 검색창 */
+	.headArea>div {float: left;}
+	#ctgArea>* {float: left; width: 200px;;}
+	#form-group {width: 150px;}
+	#searchArea>* {float: left;}
+	.input-group {width: 250px; margin-left: 517px;}
+	#keyword:focus, #keyword:active {
+		border-color: lightgray !important;
+	    box-shadow: 0 1px 1px rgba(255, 255, 255, 0) inset, 0 0 8px rgba(255, 255, 255, 0) !important;
+	    outline: 0 none !important;}
+
+	/* 상품리스트 */
+    .thumbnail{width: 320px; display: inline-block; margin: 15px 20px 15px 20px;}
+    .thumbnail:hover{cursor:pointer; opacity:0.6;}
+
 	.btn-info {
         background-color: rgb(155, 89, 182); 
         border-color: rgb(155, 89, 182); 
@@ -60,28 +81,8 @@
 	    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgb(104, 104, 104)), 0.6) !important;
 	    outline: 0 none !important;
 	}
-
-	/* 영역 */
-	.content{width:1200px; height:955px; margin: auto;}
-	.headArea{width: 1200px; height: 100px; text-align: center; margin: auto; padding: 50px 80px 0px 80px;}
-	.listArea{width:100%; height:800px; text-align: center; margin: auto;}
-	.pagingArea{width:100%; height:55px; margin: auto;}
-
-	/* 카테고리, 검색창 */
-	.headArea>div {float: left;}
-	#ctgArea>* {float: left; width: 200px;;}
-	#form-group {width: 150px;}
-	#searchArea>* {float: left;}
-	.input-group {width: 250px; margin-left: 517px;}
-	#keyword:focus, #keyword:active {
-		border-color: lightgray !important;
-	    box-shadow: 0 1px 1px rgba(255, 255, 255, 0) inset, 0 0 8px rgba(255, 255, 255, 0) !important;
-	    outline: 0 none !important;}
-
-	/* 상품리스트 */
-    .thumbnail{width: 320px; display: inline-block; margin: 15px 20px 15px 20px;}
-    .thumbnail:hover{cursor:pointer; opacity:0.6;}
 </style>
+
 </head>
 <body class="sb-nav-fixed">
    <!-- 상단바 -->
@@ -101,8 +102,30 @@
             
 			<div class="content">
 				<div class="headArea">
+				
+					<!--  
+					<form action="">
+						<div id="form-group">
+							<select class="form-control" name="pdtCtg">
+								<option value="newest">최신순</option>
+								<option value="expensive">높은가격순</option>
+								<option value="cheap">낮은가격순</option>
+							</select>
+						</div>
+					</form>
+					-->
 
-					<!-- 카테고리별 정렬 -->
+					<!--  					
+					<c:if test="${ !empty pdtCtg }">
+						<script>
+							$(function(){
+								$("#headArea option[value=${pdtCtg}]").attr("selected", true);
+							})
+						</script>
+					</c:if>
+					-->
+
+					<!-- 카테고리 -->
 					<form action="ctgList.st">
 						<div id="ctgArea">
 							<div id="form-group">

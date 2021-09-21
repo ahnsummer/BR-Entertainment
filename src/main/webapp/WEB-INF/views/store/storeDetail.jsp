@@ -173,7 +173,7 @@
                 
                 <div class="productDetail">
 					${ p.pdtDetail }
-                </div><br><br>
+                </div>
 			</div>
         </div>
     </div>
