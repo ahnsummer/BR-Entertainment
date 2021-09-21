@@ -159,63 +159,61 @@
                  	<c:forEach var="i" begin="0" end="3">
                      	<c:choose>
                          	<c:when test="${ i lt ApprovalPathList.size() }">
-          					
-                            <!--i라는 값이 현재 리스트의 사이즈보다 작을 경우 (예를들어 현재 리스트의 사이즈가 2라는 가정하면 i가 0,1일경우)-->
-                            <div id="approvalInfo">
-								<div style="height:35px; padding-top:7px;">${ ApprovalPathList[i].deptName }</div>
-								<div style="height:35px; padding-top:7px;">${ ApprovalPathList[i].posiName }</div>
-								<c:choose>
-									<c:when test="${ ApprovalPathList[i].apEnrolldate != null }">
+								<!--i라는 값이 현재 리스트의 사이즈보다 작을 경우 (예를들어 현재 리스트의 사이즈가 2라는 가정하면 i가 0,1일경우)-->
+								<div id="approvalInfo">
+									<div style="height:35px; padding-top:7px;">${ ApprovalPathList[i].deptName }</div>
+									<div style="height:35px; padding-top:7px;">${ ApprovalPathList[i].posiName }</div>
+									
+									<c:choose>
+										<c:when test="${ ApprovalPathList[i].apEnrolldate != null }">
+											<div style="height:80px; padding-top:10px;"><img src="resources/elecApprovalUpfiles/check2.png"></div>
+											
+											<!-- 기안/반려하기 버튼 구현 -->
+											<c:if test="${ (i+1) lt ApprovalPathList.size() }">
+												<c:set var="turnNo" value="${ ApprovalPathList[i+1].memNo }"/>
+												<c:set var="approvalNo" value="${ ApprovalPathList[i+1].approvalPathNo }"/>
+											</c:if>
+											
+											<!-- 삭제하기 버튼 구현 -->
+											<c:set var="flag" value="delete"/>
+										</c:when>
+										<c:otherwise>
+											<div style="height:80px;"></div>
+											<c:if test="${i eq 0}">
+												<c:set var="turnNo" value="${ApprovalPathList[i].memNo}"/>
+												<c:set var="approvalNo" value="${ ApprovalPathList[i].approvalPathNo }"/>
+											</c:if>
+										</c:otherwise>
+									</c:choose>
 
-										<div style="height:80px; padding-top:10px;"><img src="resources/elecApprovalUpfiles/check2.png"></div>
+									<div style="height:35px; padding-top:7px;">
+										<fmt:parseDate value="${ ApprovalPathList[i].apEnrolldate }" var="apEnrolldate" pattern="yyyy-MM-dd HH:mm:ss"/>
+										<fmt:formatDate value="${ apEnrolldate }" pattern="yyyy-MM-dd"/>
+									</div>
+									<div style="height:35px; padding-top:7px;">${ ApprovalPathList[i].memName }</div>
 
-										<!-- 기안/반려하기 버튼 구현 -->
-										<c:if test="${ (i+1) lt ApprovalPathList.size() }">
-											<c:set var="turnNo" value="${ ApprovalPathList[i+1].memNo }"/>
-											<c:set var="approvalNo" value="${ ApprovalPathList[i+1].approvalPathNo }"/>
-										</c:if>
-
-										<!-- 삭제하기 버튼 구현 -->
-										<c:set var="flag" value="delete"/>
-									</c:when>
-									<c:otherwise>
-										<div style="height:80px;"></div>
-										<c:if test="${i eq 0}">
-											<c:set var="turnNo" value="${ApprovalPathList[i].memNo}"/>
-											<c:set var="approvalNo" value="${ ApprovalPathList[i].approvalPathNo }"/>
-										</c:if>
-									</c:otherwise>
-								</c:choose>
-
-								<div style="height:35px; padding-top:7px;">
-									<fmt:parseDate value="${ ApprovalPathList[i].apEnrolldate }" var="apEnrolldate" pattern="yyyy-MM-dd HH:mm:ss"/>
-									<fmt:formatDate value="${ apEnrolldate }" pattern="yyyy-MM-dd"/>
+									<c:if test="${ ApprovalPathList[i].memNo eq loginUser.memNo }">
+										<c:set var="approvalName" value="approvalName"/>
+									</c:if>
+									
+									<c:if test="${ i eq 3 }">
+										<c:set var="finalApproval" value="${ ApprovalPathList[i].memNo }"/>
+									</c:if>
 								</div>
-								<div style="height:35px; padding-top:7px;">${ ApprovalPathList[i].memName }</div>
-
-								<c:if test="${ ApprovalPathList[i].memNo eq loginUser.memNo }">
-									<c:set var="approvalName" value="approvalName"/>
-								</c:if>
-								
-								<c:if test="${ i eq 3 }">
-									<c:set var="finalApproval" value="${ ApprovalPathList[i].memNo }"/>
-								</c:if>
-								
-							</div>
-                         </c:when>
-                         <c:otherwise>
-                             <!--그게 아닐경우-->
-                             <div id="approvalInfo">
-                                 <div style="height:35px;"></div>
-                                 <div style="height:35px;"></div>
-                                 <div style="height:80px;"></div>
-                                 <div style="height:35px;"></div>
-                                 <div style="height:35px;"></div>
-                             </div>
-                         </c:otherwise>
-                     </c:choose>
-                 </c:forEach>
-                </div>
+							</c:when>
+							<c:otherwise>
+								<!--그게 아닐경우-->
+								<div id="approvalInfo">
+									<div style="height:35px;"></div>
+									<div style="height:35px;"></div>
+									<div style="height:80px;"></div>
+									<div style="height:35px;"></div>
+									<div style="height:35px;"></div>
+								</div>
+							</c:otherwise>
+                    	</c:choose>
+					</c:forEach>
+				</div>
 
 				<br>
 				<div class="content_3">
